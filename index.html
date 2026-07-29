@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>黑泥 | Portfolio</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, "Noto Sans TC", sans-serif;
+      background: #0b1020;
+      color: #e8ecff;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    .card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+    h1, h2 {
+      margin-top: 0;
+    }
+    .muted {
+      color: #a8b3cf;
+      line-height: 1.7;
+    }
+    .skills span {
+      display: inline-block;
+      background: rgba(124,92,255,0.18);
+      border: 1px solid rgba(124,92,255,0.35);
+      padding: 8px 12px;
+      border-radius: 999px;
+      margin: 6px 6px 0 0;
+    }
+    .project {
+      margin-bottom: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .btn {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 10px 16px;
+      border-radius: 10px;
+      text-decoration: none;
+      color: #0b1020;
+      background: linear-gradient(135deg, #7c5cff, #00d4ff);
+      font-weight: bold;
+    }
+    .lang-btn {
+      float: right;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: transparent;
+      color: #fff;
+      padding: 8px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <button class="lang-btn" onclick="toggleLang()">EN</button>
+
+    <div class="card">
+      <h1 id="title">你好，我是 黑泥</h1>
+      <p class="muted" id="intro">
+        我是一位熱愛科技與設計的創作者，專注於打造簡潔、實用又有質感的作品。
+      </p>
+      <a class="btn" href="#contact" id="contactBtn">聯絡我</a>
+    </div>
+
+    <div class="card">
+      <h2 id="aboutTitle">關於我</h2>
+      <p class="muted" id="aboutText">
+        我喜歡做網站、設計介面，也喜歡學習新技術。這是一個簡單的個人作品集頁面。
+      </p>
+    </div>
+
+    <div class="card">
+      <h2 id="skillsTitle">技能</h2>
+      <div class="skills">
+        <span>HTML</span>
+        <span>CSS</span>
+        <span>JavaScript</span>
+        <span>GitHub Pages</span>
+        <span>UI/UX</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 id="projectsTitle">作品</h2>
+
+      <div class="project">
+        <h3 id="p1Title">作品一：個人網站</h3>
+        <p class="muted" id="p1Text">使用 HTML、CSS、JavaScript 製作的簡單個人網站。</p>
+      </div>
+
+      <div class="project">
+        <h3 id="p2Title">作品二：介面設計</h3>
+        <p class="muted" id="p2Text">設計一個科技感風格的介面展示頁。</p>
+      </div>
+    </div>
+
+    <div class="card" id="contact">
+      <h2 id="contactTitle">聯絡方式</h2>
+      <p class="muted">
+        Email: <a href="mailto:you@example.com" style="color:#8bc7ff;">you@example.com</a><br />
+        GitHub: <a href="https://github.com/yourname" target="_blank" style="color:#8bc7ff;">github.com/yourname</a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    let lang = "zh";
+    function toggleLang() {
+      lang = lang === "zh" ? "en" : "zh";
+      document.documentElement.lang = lang === "zh" ? "zh-Hant" : "en";
+
+      const text = {
+        zh: {
+          title: "你好，我是 黑泥",
+          intro: "我是一位熱愛科技與設計的創作者，專注於打造簡潔、實用又有質感的作品。",
+          contactBtn: "聯絡我",
+          aboutTitle: "關於我",
+          aboutText: "我喜歡做網站、設計介面，也喜歡學習新技術。這是一個簡單的個人作品集頁面。",
+          skillsTitle: "技能",
+          projectsTitle: "作品",
+          p1Title: "作品一：個人網站",
+          p1Text: "使用 HTML、CSS、JavaScript 製作的簡單個人網站。",
+          p2Title: "作品二：介面設計",
+          p2Text: "設計一個科技感風格的介面展示頁。",
+          contactTitle: "聯絡方式"
+        },
+        en: {
+          title: "Hi, I’m Hanny",
+          intro: "I am a creator who loves technology and design, focusing on simple, useful, and stylish work.",
+          contactBtn: "Contact Me",
+          aboutTitle: "About",
+          aboutText: "I enjoy building websites, designing interfaces, and learning new technologies. This is a simple portfolio page.",
+          skillsTitle: "Skills",
+          projectsTitle: "Projects",
+          p1Title: "Project 1: Personal Website",
+          p1Text: "A simple personal website built with HTML, CSS, and JavaScript.",
+          p2Title: "Project 2: UI Design",
+          p2Text: "A tech-style interface showcase page.",
+          contactTitle: "Contact"
+        }
+      };
+
+      document.getElementById("title").innerText = text[lang].title;
+      document.getElementById("intro").innerText = text[lang].intro;
+      document.getElementById("contactBtn").innerText = text[lang].contactBtn;
+      document.getElementById("aboutTitle").innerText = text[lang].aboutTitle;
+      document.getElementById("aboutText").innerText = text[lang].aboutText;
+      document.getElementById("skillsTitle").innerText = text[lang].skillsTitle;
+      document.getElementById("projectsTitle").innerText = text[lang].projectsTitle;
+      document.getElementById("p1Title").innerText = text[lang].p1Title;
+      document.getElementById("p1Text").innerText = text[lang].p1Text;
+      document.getElementById("p2Title").innerText = text[lang].p2Title;
+      document.getElementById("p2Text").innerText = text[lang].p2Text;
+      document.getElementById("contactTitle").innerText = text[lang].contactTitle;
+
+      document.querySelector(".lang-btn").innerText = lang === "zh" ? "EN" : "中";
+    }
+  </script>
+</body>
+</html>

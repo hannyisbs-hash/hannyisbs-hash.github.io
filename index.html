@@ -3,171 +3,977 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>黑泥 | Portfolio</title>
+  <title>黑泥 | AI × 創作 Portfolio</title>
+
+  <meta name="description" content="黑泥的個人作品集 - 專注於 AI 應用、網頁開發與介面設計，探索科技與創作的交會點。" />
+  <meta property="og:title" content="黑泥 | AI × 創作 Portfolio" />
+  <meta property="og:description" content="AI 應用、網頁開發與介面設計作品集" />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
   <style>
+    :root {
+      --bg: #eef5fb;
+      --bg-grid: rgba(14, 165, 233, 0.04);
+      --card: rgba(255, 255, 255, 0.72);
+      --card-border: rgba(14, 165, 233, 0.15);
+      --text: #0f172a;
+      --text-muted: #475569;
+      --primary: #0284c7;
+      --primary-light: #38bdf8;
+      --accent: #06b6d4;
+      --accent-2: #6366f1;
+      --gradient: linear-gradient(135deg, #0284c7, #06b6d4);
+      --glow: rgba(14, 165, 233, 0.25);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 80px;
+    }
+
     body {
-      margin: 0;
-      font-family: Arial, "Noto Sans TC", sans-serif;
-      background: #0b1020;
-      color: #e8ecff;
-    }
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 40px 20px;
-    }
-    .card {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 16px;
-      padding: 24px;
-      margin-bottom: 20px;
-    }
-    h1, h2 {
-      margin-top: 0;
-    }
-    .muted {
-      color: #a8b3cf;
+      font-family: 'Inter', 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
       line-height: 1.7;
+      overflow-x: hidden;
+      position: relative;
     }
-    .skills span {
-      display: inline-block;
-      background: rgba(124,92,255,0.18);
-      border: 1px solid rgba(124,92,255,0.35);
-      padding: 8px 12px;
-      border-radius: 999px;
-      margin: 6px 6px 0 0;
+
+    /* 科技感背景網格 */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: 
+        linear-gradient(rgba(14, 165, 233, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(14, 165, 233, 0.06) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+      mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+      -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
     }
-    .project {
-      margin-bottom: 16px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
+
+    /* 背景光暈 */
+    .glow-orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(100px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.5;
     }
-    .btn {
-      display: inline-block;
-      margin-top: 12px;
-      padding: 10px 16px;
-      border-radius: 10px;
+    .glow-orb-1 {
+      width: 500px; height: 500px;
+      background: rgba(6, 182, 212, 0.15);
+      top: -10%; right: -5%;
+    }
+    .glow-orb-2 {
+      width: 400px; height: 400px;
+      background: rgba(99, 102, 241, 0.1);
+      bottom: 10%; left: -5%;
+    }
+
+    /* 導覽列 - 玻璃擬態 */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(20px) saturate(1.4);
+      -webkit-backdrop-filter: blur(20px) saturate(1.4);
+      border-bottom: 1px solid var(--card-border);
+      transition: all 0.3s ease;
+    }
+    nav.scrolled {
+      box-shadow: 0 4px 30px rgba(14, 165, 233, 0.1);
+      background: rgba(255, 255, 255, 0.9);
+    }
+    .nav-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+    }
+    .nav-logo {
+      font-weight: 700;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text);
+    }
+    .nav-logo::before {
+      content: '◆';
+      color: var(--primary);
+      font-size: 14px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+    .nav-links a {
+      color: var(--text-muted);
       text-decoration: none;
-      color: #0b1020;
-      background: linear-gradient(135deg, #7c5cff, #00d4ff);
-      font-weight: bold;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 2.5px;
+      background: var(--gradient);
+      border-radius: 2px;
+      transition: width 0.3s ease;
+    }
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+    .nav-links a:hover::after {
+      width: 100%;
     }
     .lang-btn {
-      float: right;
-      border: 1px solid rgba(255,255,255,0.2);
-      background: transparent;
-      color: #fff;
-      padding: 8px 12px;
+      border: 1px solid var(--card-border);
+      background: rgba(255,255,255,0.6);
+      color: var(--text);
+      padding: 7px 16px;
       border-radius: 10px;
       cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.2s;
+      font-family: inherit;
+      box-shadow: 0 2px 8px rgba(14, 165, 233, 0.08);
+    }
+    .lang-btn:hover {
+      border-color: var(--primary-light);
+      background: rgba(14, 165, 233, 0.08);
+      transform: translateY(-1px);
+    }
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+    }
+    .menu-toggle span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 100px 24px 60px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* 卡片 - 玻璃擬態 + 淺藍邊框 */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 36px;
+      margin-bottom: 28px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(12px);
+      box-shadow: 
+        0 4px 24px rgba(14, 165, 233, 0.06),
+        inset 0 1px 0 rgba(255,255,255,0.8);
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--primary-light), var(--accent), transparent);
+      opacity: 0.6;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(14, 165, 233, 0.3);
+      box-shadow: 
+        0 20px 60px rgba(14, 165, 233, 0.12),
+        0 0 40px rgba(14, 165, 233, 0.06),
+        inset 0 1px 0 rgba(255,255,255,0.9);
+    }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 48px 0 28px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      border-radius: 999px;
+      background: rgba(14, 165, 233, 0.08);
+      border: 1px solid rgba(14, 165, 233, 0.2);
+      color: var(--primary);
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 24px;
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.5px;
+    }
+    .badge .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.9); }
+    }
+    .avatar {
+      width: 130px; height: 130px;
+      border-radius: 50%;
+      background: var(--gradient);
+      padding: 3px;
+      margin: 0 auto 28px;
+      position: relative;
+      box-shadow: 0 8px 32px rgba(14, 165, 233, 0.2);
+    }
+    .avatar-inner {
+      width: 100%; height: 100%;
+      border-radius: 50%;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 52px;
+      overflow: hidden;
+    }
+    .avatar-inner img {
+      width: 100%; height: 100%;
+      object-fit: cover; border-radius: 50%;
+    }
+    .hero h1 {
+      font-size: 40px;
+      font-weight: 700;
+      margin: 0 0 14px;
+      line-height: 1.25;
+      color: var(--text);
+    }
+    .hero h1 .gradient-text {
+      background: linear-gradient(135deg, #0284c7, #06b6d4, #6366f1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .typewriter {
+      font-size: 17px;
+      color: var(--text-muted);
+      min-height: 36px;
+      margin-bottom: 32px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .typewriter .cursor {
+      display: inline-block;
+      width: 2.5px; height: 22px;
+      background: var(--primary);
+      margin-left: 4px;
+      animation: blink 1s step-end infinite;
+      vertical-align: middle;
+      border-radius: 2px;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .btn-group {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 30px;
+      border-radius: 14px;
+      text-decoration: none;
+      color: #fff;
+      background: var(--gradient);
+      font-weight: 700;
+      font-size: 15px;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(2, 132, 199, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    .btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 35px rgba(2, 132, 199, 0.4);
+    }
+    .btn:hover::before { opacity: 1; }
+    .btn-outline {
+      background: rgba(255,255,255,0.6);
+      color: var(--primary);
+      border: 1.5px solid var(--card-border);
+      box-shadow: 0 2px 12px rgba(14, 165, 233, 0.08);
+    }
+    .btn-outline:hover {
+      border-color: var(--primary-light);
+      background: rgba(14, 165, 233, 0.06);
+      box-shadow: 0 6px 24px rgba(14, 165, 233, 0.15);
+    }
+
+    h2 {
+      font-size: 22px;
+      font-weight: 700;
+      margin: 0 0 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text);
+    }
+    h2 .icon { font-size: 22px; }
+    .muted {
+      color: var(--text-muted);
+      line-height: 1.85;
+      margin: 0;
+      font-size: 15px;
+    }
+
+    /* 技能 */
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .skills span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(14, 165, 233, 0.07);
+      border: 1px solid rgba(14, 165, 233, 0.18);
+      padding: 9px 18px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      cursor: default;
+      color: var(--text);
+    }
+    .skills span:hover {
+      background: rgba(14, 165, 233, 0.14);
+      border-color: rgba(14, 165, 233, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(14, 165, 233, 0.12);
+    }
+    .skills span.ai-tag {
+      background: linear-gradient(135deg, rgba(99,102,241,0.08), rgba(6,182,212,0.08));
+      border-color: rgba(99,102,241,0.25);
+    }
+    .skills span.ai-tag:hover {
+      border-color: rgba(99,102,241,0.45);
+      box-shadow: 0 6px 20px rgba(99,102,241,0.12);
+    }
+
+    /* 作品網格 */
+    .project-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+    }
+    .project-card {
+      background: rgba(255,255,255,0.5);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      position: relative;
+    }
+    .project-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 20px;
+      border: 1.5px solid transparent;
+      transition: border-color 0.3s;
+      pointer-events: none;
+    }
+    .project-card:hover {
+      transform: translateY(-7px);
+      box-shadow: 0 24px 50px rgba(14, 165, 233, 0.12);
+    }
+    .project-card:hover::after {
+      border-color: rgba(14, 165, 233, 0.25);
+    }
+    .project-img {
+      width: 100%; height: 170px;
+      background: linear-gradient(135deg, rgba(2,132,199,0.08), rgba(6,182,212,0.06));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 52px;
+      position: relative;
+      overflow: hidden;
+    }
+    .project-img .link-icon {
+      position: absolute;
+      top: 14px; right: 14px;
+      width: 32px; height: 32px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      opacity: 0;
+      transform: translateY(-4px);
+      transition: all 0.3s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .project-card:hover .link-icon {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .project-body {
+      padding: 22px;
+    }
+    .project-body h3 {
+      margin: 0 0 8px;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .project-body p {
+      margin: 0;
+      font-size: 13.5px;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+    .project-tags {
+      display: flex;
+      gap: 6px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+    .project-tags span {
+      font-size: 11.5px;
+      padding: 4px 12px;
+      border-radius: 8px;
+      background: rgba(14, 165, 233, 0.07);
+      color: var(--primary);
+      font-weight: 500;
+      border: 1px solid rgba(14, 165, 233, 0.12);
+    }
+    .project-tags span.ai {
+      background: rgba(99, 102, 241, 0.07);
+      color: var(--accent-2);
+      border-color: rgba(99, 102, 241, 0.15);
+    }
+
+    /* AI 專區 */
+    .ai-section {
+      background: linear-gradient(135deg, rgba(99,102,241,0.04), rgba(6,182,212,0.04));
+      border: 1.5px solid rgba(99, 102, 241, 0.12);
+    }
+    .ai-section::before {
+      background: linear-gradient(90deg, transparent, rgba(99,102,241,0.3), rgba(6,182,212,0.3), transparent);
+    }
+    .ai-tools {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-top: 8px;
+    }
+    .ai-tool {
+      background: rgba(255,255,255,0.5);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 20px;
+      transition: all 0.3s ease;
+    }
+    .ai-tool:hover {
+      transform: translateY(-3px);
+      border-color: rgba(99,102,241,0.25);
+      box-shadow: 0 8px 24px rgba(99,102,241,0.08);
+    }
+    .ai-tool h4 {
+      font-size: 14px;
+      font-weight: 700;
+      margin: 0 0 6px;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .ai-tool p {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* 聯絡 */
+    .contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 20px;
+    }
+    .contact-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      padding: 11px 20px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.5);
+      border: 1px solid var(--card-border);
+      transition: all 0.3s;
+      font-weight: 500;
+    }
+    .contact-links a:hover {
+      color: var(--primary);
+      border-color: var(--primary-light);
+      background: rgba(14, 165, 233, 0.06);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(14, 165, 233, 0.1);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 48px 24px;
+      color: var(--text-muted);
+      font-size: 13.5px;
+      position: relative;
+      z-index: 1;
+    }
+    footer .heart {
+      color: #ef4444;
+      display: inline-block;
+      animation: heartbeat 2s infinite;
+    }
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      15% { transform: scale(1.15); }
+      30% { transform: scale(1); }
+    }
+
+    /* 回到頂部 */
+    .back-to-top {
+      position: fixed;
+      bottom: 28px; right: 28px;
+      width: 46px; height: 46px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.8);
+      border: 1px solid var(--card-border);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0; visibility: hidden;
+      transition: all 0.3s;
+      z-index: 99;
+      font-size: 18px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 16px rgba(14, 165, 233, 0.12);
+      font-weight: 700;
+    }
+    .back-to-top.visible {
+      opacity: 1; visibility: visible;
+    }
+    .back-to-top:hover {
+      border-color: var(--primary-light);
+      background: #fff;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(14, 165, 233, 0.2);
+    }
+
+    /* 滾動進場 */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    /* 語言切換淡入 */
+    .fade-text {
+      transition: opacity 0.25s ease;
+    }
+    .fade-text.switching { opacity: 0; }
+
+    /* 響應式 */
+    @media (max-width: 680px) {
+      .nav-links { display: none; }
+      .menu-toggle { display: flex; }
+      .hero h1 { font-size: 30px; }
+      .project-grid { grid-template-columns: 1fr; }
+      .btn-group { flex-direction: column; align-items: center; }
+      .ai-tools { grid-template-columns: 1fr; }
+      .card { padding: 28px 22px; }
     }
   </style>
+<base target="_blank">
 </head>
 <body>
+
+  <div class="glow-orb glow-orb-1"></div>
+  <div class="glow-orb glow-orb-2"></div>
+
+  <nav id="navbar">
+    <div class="nav-inner">
+      <div class="nav-logo">黑泥</div>
+      <div class="nav-links">
+        <a href="#about" data-key="navAbout">關於</a>
+        <a href="#skills" data-key="navSkills">技能</a>
+        <a href="#ai" data-key="navAI">AI 應用</a>
+        <a href="#projects" data-key="navProjects">作品</a>
+        <a href="#contact" data-key="navContact">聯絡</a>
+        <button class="lang-btn" onclick="toggleLang()">EN</button>
+      </div>
+      <button class="menu-toggle" onclick="toggleMobileMenu()" aria-label="menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
   <div class="container">
-    <button class="lang-btn" onclick="toggleLang()">EN</button>
 
-    <div class="card">
-      <h1 id="title">嗨，我是 黑泥</h1>
-      <p class="muted" id="intro">
-        我是一位熱愛科技與設計的創作者，專注於打造簡潔、實用又有質感的作品。
-      </p>
-      <a class="btn" href="#contact" id="contactBtn">聯絡我</a>
+    <!-- Hero -->
+    <div class="card hero reveal">
+      <div class="badge">
+        <span class="dot"></span>
+        <span id="badgeText">AI × 創作 × 網頁</span>
+      </div>
+      <div class="avatar">
+        <div class="avatar-inner">
+          <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Hanny&backgroundColor=b6e3f4" alt="avatar" onerror="this.style.display='none'; this.parentElement.innerText='👤';">
+        </div>
+      </div>
+      <h1 id="title">你好，我是 <span class="gradient-text">黑泥</span></h1>
+      <div class="typewriter">
+        <span id="intro"></span><span class="cursor"></span>
+      </div>
+      <div class="btn-group">
+        <a class="btn" href="#contact" id="contactBtn">聯絡我</a>
+        <a class="btn btn-outline" href="#projects" id="viewWorksBtn">查看作品</a>
+      </div>
     </div>
 
-    <div class="card">
-      <h2 id="aboutTitle">關於我</h2>
+    <!-- 關於我 -->
+    <div class="card reveal" id="about">
+      <h2><span class="icon">👤</span> <span id="aboutTitle">關於我</span></h2>
       <p class="muted" id="aboutText">
-        我喜歡做網站、設計介面，也喜歡學習新技術。這是一個簡單的個人作品集頁面。
+        我是一位熱愛科技與設計的創作者，專注於 AI 工具應用、網頁開發與介面設計。喜歡探索新技術，將 AI 融入創作流程，打造兼具美感與實用性的作品。
       </p>
     </div>
 
-    <div class="card">
-      <h2 id="skillsTitle">技能</h2>
+    <!-- 技能 -->
+    <div class="card reveal" id="skills">
+      <h2><span class="icon">🛠️</span> <span id="skillsTitle">技能</span></h2>
       <div class="skills">
-        <span>HTML</span>
-        <span>CSS</span>
-        <span>JavaScript</span>
-        <span>GitHub Pages</span>
-        <span>UI/UX</span>
+        <span>⚡ HTML / CSS / JS</span>
+        <span>🐙 Git / GitHub</span>
+        <span>📐 UI/UX 設計</span>
+        <span>📱 RWD 響應式</span>
+        <span class="ai-tag">🤖 LLM 應用開發</span>
+        <span class="ai-tag">🧠 Prompt Engineering</span>
+        <span class="ai-tag">🎨 AI 輔助設計</span>
+        <span class="ai-tag">⚙️ AI 工作流程自動化</span>
+        <span class="ai-tag">🔌 API 整合</span>
       </div>
     </div>
 
-    <div class="card">
-      <h2 id="projectsTitle">作品</h2>
-
-      <div class="project">
-        <h3 id="p1Title">作品一：個人網站</h3>
-        <p class="muted" id="p1Text">使用 HTML、CSS、JavaScript 製作的簡單個人網站。</p>
-      </div>
-
-      <div class="project">
-        <h3 id="p2Title">作品二：介面設計</h3>
-        <p class="muted" id="p2Text">設計一個科技感風格的介面展示頁。</p>
-      </div>
-    </div>
-
-    <div class="card" id="contact">
-      <h2 id="contactTitle">聯絡方式</h2>
-      <p class="muted">
-        Email: <a href="mailto:you@example.com" style="color:#8bc7ff;">you@example.com</a><br />
-        GitHub: <a href="https://github.com/yourname" target="_blank" style="color:#8bc7ff;">github.com/yourname</a>
+    <!-- AI 應用專區 -->
+    <div class="card reveal ai-section" id="ai">
+      <h2><span class="icon">🤖</span> <span id="aiTitle">AI 應用</span></h2>
+      <p class="muted" id="aiDesc" style="margin-bottom: 20px;">
+        我積極將 AI 工具融入創作與開發流程，從內容生成、程式輔助到設計協作，探索人機協作的最佳實踐。
       </p>
+      <div class="ai-tools">
+        <div class="ai-tool">
+          <h4>🧠 提示工程</h4>
+          <p>設計高效 Prompt，讓 AI 精準理解需求並產出高品質內容。</p>
+        </div>
+        <div class="ai-tool">
+          <h4>🎨 AI 輔助設計</h4>
+          <p>運用 Midjourney、Figma AI 等工具加速視覺創意發想。</p>
+        </div>
+        <div class="ai-tool">
+          <h4>⚡ 自動化流程</h4>
+          <p>結合 n8n / Zapier 與 LLM API，打造自動化工作流。</p>
+        </div>
+        <div class="ai-tool">
+          <h4>💻 AI 輔助開發</h4>
+          <p>善用 Copilot、Cursor 等工具提升程式撰寫與除錯效率。</p>
+        </div>
+      </div>
     </div>
+
+    <!-- 作品 -->
+    <div class="card reveal" id="projects">
+      <h2><span class="icon">🚀</span> <span id="projectsTitle">作品</span></h2>
+      <div class="project-grid">
+        <a class="project-card" href="https://github.com/yourname/project1" target="_blank">
+          <div class="project-img">
+            🌐
+            <div class="link-icon">↗</div>
+          </div>
+          <div class="project-body">
+            <h3 id="p1Title">個人 AI 作品集網站</h3>
+            <p id="p1Text">使用 HTML、CSS、JavaScript 打造的科技感個人網站，整合 AI 輔助設計流程。</p>
+            <div class="project-tags">
+              <span>HTML</span><span>CSS</span><span>JS</span>
+            </div>
+          </div>
+        </a>
+        <a class="project-card" href="https://github.com/yourname/project2" target="_blank">
+          <div class="project-img">
+            🎨
+            <div class="link-icon">↗</div>
+          </div>
+          <div class="project-body">
+            <h3 id="p2Title">AI 介面設計系統</h3>
+            <p id="p2Text">設計一套淺藍科技感 UI 系統，運用 AI 輔助生成視覺素材與配色方案。</p>
+            <div class="project-tags">
+              <span>Figma</span><span>UI/UX</span><span class="ai">AI 輔助</span>
+            </div>
+          </div>
+        </a>
+        <a class="project-card" href="https://github.com/yourname/project3" target="_blank">
+          <div class="project-img">
+            🤖
+            <div class="link-icon">↗</div>
+          </div>
+          <div class="project-body">
+            <h3 id="p3Title">AI 對話助手</h3>
+            <p id="p3Text">基於 LLM API 打造的網頁對話應用，支援多輪對話與上下文記憶。</p>
+            <div class="project-tags">
+              <span>JavaScript</span><span class="ai">OpenAI API</span><span class="ai">LLM</span>
+            </div>
+          </div>
+        </a>
+        <a class="project-card" href="https://github.com/yourname/project4" target="_blank">
+          <div class="project-img">
+            ⚡
+            <div class="link-icon">↗</div>
+          </div>
+          <div class="project-body">
+            <h3 id="p4Title">自動化內容生成器</h3>
+            <p id="p4Text">結合 Prompt 模板與 API，自動生成社群貼文與視覺素材的工作流工具。</p>
+            <div class="project-tags">
+              <span>Node.js</span><span class="ai">n8n</span><span class="ai">自動化</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- 聯絡 -->
+    <div class="card reveal" id="contact">
+      <h2><span class="icon">📬</span> <span id="contactTitle">聯絡方式</span></h2>
+      <p class="muted" id="contactDesc">有專案合作或想聊聊 AI 應用？歡迎聯絡我！</p>
+      <div class="contact-links">
+        <a href="mailto:you@example.com">📧 you@example.com</a>
+        <a href="https://github.com/yourname" target="_blank">🐙 GitHub</a>
+        <a href="#" target="_blank">💼 LinkedIn</a>
+        <a href="#" target="_blank">🐦 Twitter / X</a>
+      </div>
+    </div>
+
   </div>
 
+  <footer>
+    <p>© <span id="year"></span> 黑泥 · Made with <span class="heart">♥</span> & AI</p>
+  </footer>
+
+  <div class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+
   <script>
+    const i18n = {
+      zh: {
+        badgeText: "AI × 創作 × 網頁",
+        title: "你好，我是 黑泥",
+        typewriter: ["探索 AI 與創作的無限可能。", "用科技打造有溫度的設計。", "歡迎來到我的作品集！"],
+        contactBtn: "聯絡我",
+        viewWorksBtn: "查看作品",
+        navAbout: "關於",
+        navSkills: "技能",
+        navAI: "AI 應用",
+        navProjects: "作品",
+        navContact: "聯絡",
+        aboutTitle: "關於我",
+        aboutText: "我是一位熱愛科技與設計的創作者，專注於 AI 工具應用、網頁開發與介面設計。喜歡探索新技術，將 AI 融入創作流程，打造兼具美感與實用性的作品。",
+        skillsTitle: "技能",
+        aiTitle: "AI 應用",
+        aiDesc: "我積極將 AI 工具融入創作與開發流程，從內容生成、程式輔助到設計協作，探索人機協作的最佳實踐。",
+        projectsTitle: "作品",
+        p1Title: "個人 AI 作品集網站",
+        p1Text: "使用 HTML、CSS、JavaScript 打造的科技感個人網站，整合 AI 輔助設計流程。",
+        p2Title: "AI 介面設計系統",
+        p2Text: "設計一套淺藍科技感 UI 系統，運用 AI 輔助生成視覺素材與配色方案。",
+        p3Title: "AI 對話助手",
+        p3Text: "基於 LLM API 打造的網頁對話應用，支援多輪對話與上下文記憶。",
+        p4Title: "自動化內容生成器",
+        p4Text: "結合 Prompt 模板與 API，自動生成社群貼文與視覺素材的工作流工具。",
+        contactTitle: "聯絡方式",
+        contactDesc: "有專案合作或想聊聊 AI 應用？歡迎聯絡我！"
+      },
+      en: {
+        badgeText: "AI × Create × Web",
+        title: "Hi, I’m Hanny",
+        typewriter: ["Exploring the infinite possibilities of AI & creation.", "Building warm designs with technology.", "Welcome to my portfolio!"],
+        contactBtn: "Contact Me",
+        viewWorksBtn: "View Works",
+        navAbout: "About",
+        navSkills: "Skills",
+        navAI: "AI Apps",
+        navProjects: "Works",
+        navContact: "Contact",
+        aboutTitle: "About",
+        aboutText: "I'm a creator passionate about technology and design, focusing on AI tool applications, web development, and interface design. I love exploring new technologies and integrating AI into my creative workflow to build works that are both beautiful and practical.",
+        skillsTitle: "Skills",
+        aiTitle: "AI Applications",
+        aiDesc: "I actively integrate AI tools into my creative and development workflow, from content generation and coding assistance to design collaboration, exploring best practices for human-AI collaboration.",
+        projectsTitle: "Projects",
+        p1Title: "Personal AI Portfolio",
+        p1Text: "A tech-styled personal website built with HTML, CSS, and JavaScript, integrating AI-assisted design workflows.",
+        p2Title: "AI UI Design System",
+        p2Text: "A light-blue tech UI system designed with AI-assisted visual asset and color scheme generation.",
+        p3Title: "AI Chat Assistant",
+        p3Text: "A web-based conversational app built on LLM APIs, supporting multi-turn dialogue and context memory.",
+        p4Title: "Auto Content Generator",
+        p4Text: "A workflow tool combining prompt templates and APIs to auto-generate social posts and visual assets.",
+        contactTitle: "Contact",
+        contactDesc: "Have a project or want to chat about AI applications? Feel free to reach out!"
+      }
+    };
+
     let lang = "zh";
+    let typeInterval;
+
+    function typeWriter(texts, elementId, speed = 55, delay = 2200) {
+      const el = document.getElementById(elementId);
+      let textIndex = 0, charIndex = 0, isDeleting = false;
+      clearInterval(typeInterval);
+      function type() {
+        const currentText = texts[textIndex];
+        if (isDeleting) {
+          el.textContent = currentText.substring(0, charIndex - 1);
+          charIndex--;
+        } else {
+          el.textContent = currentText.substring(0, charIndex + 1);
+          charIndex++;
+        }
+        let typeSpeed = isDeleting ? speed / 2 : speed;
+        if (!isDeleting && charIndex === currentText.length) {
+          typeSpeed = delay;
+          isDeleting = true;
+        } else if (isDeleting && charIndex === 0) {
+          isDeleting = false;
+          textIndex = (textIndex + 1) % texts.length;
+          typeSpeed = 500;
+        }
+        typeInterval = setTimeout(type, typeSpeed);
+      }
+      type();
+    }
+
+    function updateText(id, text) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.classList.add('switching');
+      setTimeout(() => { el.textContent = text; el.classList.remove('switching'); }, 150);
+    }
+
     function toggleLang() {
       lang = lang === "zh" ? "en" : "zh";
+      const t = i18n[lang];
       document.documentElement.lang = lang === "zh" ? "zh-Hant" : "en";
 
-      const text = {
-        zh: {
-          title: "嗨，我是 黑泥",
-          intro: "我是一位熱愛科技與設計的創作者，專注於打造簡潔、實用又有質感的作品。",
-          contactBtn: "聯絡我",
-          aboutTitle: "關於我",
-          aboutText: "我喜歡做網站、設計介面，也喜歡學習新技術。這是一個簡單的個人作品集頁面。",
-          skillsTitle: "技能",
-          projectsTitle: "作品",
-          p1Title: "作品一：個人網站",
-          p1Text: "使用 HTML、CSS、JavaScript 製作的簡單個人網站。",
-          p2Title: "作品二：介面設計",
-          p2Text: "設計一個科技感風格的介面展示頁。",
-          contactTitle: "聯絡方式"
-        },
-        en: {
-          title: "Hi, I’m Hanny",
-          intro: "I am a creator who loves technology and design, focusing on simple, useful, and stylish work.",
-          contactBtn: "Contact Me",
-          aboutTitle: "About",
-          aboutText: "I enjoy building websites, designing interfaces, and learning new technologies. This is a simple portfolio page.",
-          skillsTitle: "Skills",
-          projectsTitle: "Projects",
-          p1Title: "Project 1: Personal Website",
-          p1Text: "A simple personal website built with HTML, CSS, and JavaScript.",
-          p2Title: "Project 2: UI Design",
-          p2Text: "A tech-style interface showcase page.",
-          contactTitle: "Contact"
-        }
-      };
+      updateText("badgeText", t.badgeText);
+      updateText("title", t.title);
+      typeWriter(t.typewriter, "intro");
+      updateText("contactBtn", t.contactBtn);
+      updateText("viewWorksBtn", t.viewWorksBtn);
 
-      document.getElementById("title").innerText = text[lang].title;
-      document.getElementById("intro").innerText = text[lang].intro;
-      document.getElementById("contactBtn").innerText = text[lang].contactBtn;
-      document.getElementById("aboutTitle").innerText = text[lang].aboutTitle;
-      document.getElementById("aboutText").innerText = text[lang].aboutText;
-      document.getElementById("skillsTitle").innerText = text[lang].skillsTitle;
-      document.getElementById("projectsTitle").innerText = text[lang].projectsTitle;
-      document.getElementById("p1Title").innerText = text[lang].p1Title;
-      document.getElementById("p1Text").innerText = text[lang].p1Text;
-      document.getElementById("p2Title").innerText = text[lang].p2Title;
-      document.getElementById("p2Text").innerText = text[lang].p2Text;
-      document.getElementById("contactTitle").innerText = text[lang].contactTitle;
+      document.querySelectorAll('[data-key]').forEach(el => {
+        const key = el.dataset.key;
+        if (t[key]) el.textContent = t[key];
+      });
 
-      document.querySelector(".lang-btn").innerText = lang === "zh" ? "EN" : "中";
+      ["aboutTitle","aboutText","skillsTitle","aiTitle","aiDesc","projectsTitle",
+       "p1Title","p1Text","p2Title","p2Text","p3Title","p3Text","p4Title","p4Text",
+       "contactTitle","contactDesc"].forEach(id => updateText(id, t[id]));
+
+      document.querySelector(".lang-btn").textContent = lang === "zh" ? "EN" : "中";
+    }
+
+    typeWriter(i18n.zh.typewriter, "intro");
+
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 20);
+      document.getElementById('backToTop').classList.toggle('visible', window.scrollY > 400);
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    function toggleMobileMenu() {
+      alert('手機版選單可再擴充側邊欄～');
     }
   </script>
 </body>

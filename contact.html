@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>聯絡我 | 黑泥 Portfolio</title>
+  <meta name="description" content="與黑泥取得聯繫，討論專案合作或技術交流。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f0f7ff;
+      --card: rgba(255, 255, 255, 0.78);
+      --card-border: rgba(14, 165, 233, 0.18);
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --primary: #0ea5e9;
+      --primary-light: #38bdf8;
+      --accent: #06b6d4;
+      --accent-2: #6366f1;
+      --gradient: linear-gradient(135deg, #0ea5e9, #06b6d4);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+      position: relative;
+      min-height: 100vh;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: 
+        linear-gradient(rgba(14, 165, 233, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(14, 165, 233, 0.05) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+      mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+      -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+    }
+    .glow-orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.45;
+    }
+    .glow-orb-1 { width: 600px; height: 600px; background: rgba(14, 165, 233, 0.18); top: -15%; right: -10%; }
+    .glow-orb-2 { width: 500px; height: 500px; background: rgba(99, 102, 241, 0.12); bottom: 5%; left: -10%; }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(20px) saturate(1.4);
+      -webkit-backdrop-filter: blur(20px) saturate(1.4);
+      border-bottom: 1px solid var(--card-border);
+      transition: all 0.3s ease;
+    }
+    nav.scrolled { box-shadow: 0 4px 30px rgba(14, 165, 233, 0.1); background: rgba(255, 255, 255, 0.88); }
+    .nav-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+    }
+    .nav-logo {
+      font-weight: 700;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .nav-logo::before { content: '◆'; color: var(--primary); font-size: 14px; }
+    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 2.5px;
+      background: var(--gradient);
+      border-radius: 2px;
+      transition: width 0.3s ease;
+    }
+    .nav-links a:hover { color: var(--primary); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a.active { color: var(--primary); }
+    .nav-links a.active::after { width: 100%; }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 100px 24px 60px;
+      position: relative;
+      z-index: 1;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 36px;
+      margin-bottom: 28px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 4px 24px rgba(14, 165, 233, 0.06), inset 0 1px 0 rgba(255,255,255,0.9);
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--primary-light), var(--accent), transparent);
+      opacity: 0.5;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(14, 165, 233, 0.3);
+      box-shadow: 0 20px 60px rgba(14, 165, 233, 0.1), 0 0 40px rgba(14, 165, 233, 0.06), inset 0 1px 0 rgba(255,255,255,0.95);
+    }
+
+    h1 { font-size: 32px; font-weight: 700; margin: 0 0 12px; }
+    h2 { font-size: 22px; font-weight: 700; margin: 0 0 18px; display: flex; align-items: center; gap: 10px; }
+    h2 .icon { font-size: 22px; }
+    .muted { color: var(--text-muted); line-height: 1.85; margin: 0; font-size: 15px; }
+
+    .page-header {
+      text-align: center;
+      padding: 20px 0 10px;
+    }
+    .page-header h1 .gradient-text {
+      background: linear-gradient(135deg, #0ea5e9, #06b6d4, #6366f1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+
+    /* 聯絡方式卡片 */
+    .contact-methods {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .contact-method {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 24px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.5);
+      border: 1px solid var(--card-border);
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.3s ease;
+    }
+    .contact-method:hover {
+      transform: translateX(4px);
+      border-color: var(--primary-light);
+      background: rgba(14, 165, 233, 0.05);
+      box-shadow: 0 4px 16px rgba(14, 165, 233, 0.08);
+    }
+    .contact-method .icon-box {
+      width: 48px; height: 48px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(14,165,233,0.1), rgba(99,102,241,0.08));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .contact-method .info h4 {
+      font-size: 15px;
+      font-weight: 700;
+      margin: 0 0 2px;
+      color: var(--text);
+    }
+    .contact-method .info p {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    /* 表單 */
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 1.5px solid var(--card-border);
+      background: rgba(255,255,255,0.6);
+      color: var(--text);
+      font-size: 15px;
+      font-family: inherit;
+      transition: all 0.25s ease;
+      outline: none;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--primary-light);
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.1);
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: #94a3b8;
+    }
+    .form-group textarea {
+      min-height: 140px;
+      resize: vertical;
+    }
+    .btn-submit {
+      width: 100%;
+      padding: 14px 24px;
+      border-radius: 14px;
+      border: none;
+      background: var(--gradient);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(14, 165, 233, 0.3);
+      font-family: inherit;
+    }
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(14, 165, 233, 0.4);
+    }
+
+    .availability {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 20px;
+      border-radius: 12px;
+      background: rgba(34, 197, 94, 0.08);
+      border: 1px solid rgba(34, 197, 94, 0.2);
+      margin-bottom: 24px;
+    }
+    .availability .dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: #22c55e;
+      animation: pulse-dot 2s infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    .availability span {
+      font-size: 14px;
+      color: #15803d;
+      font-weight: 500;
+    }
+
+    footer {
+      text-align: center;
+      padding: 48px 24px;
+      color: var(--text-muted);
+      font-size: 13.5px;
+      position: relative;
+      z-index: 1;
+    }
+    footer .heart { color: #f472b6; display: inline-block; animation: heartbeat 2s infinite; }
+    @keyframes heartbeat { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.15); } 30% { transform: scale(1); } }
+
+    .back-to-top {
+      position: fixed;
+      bottom: 28px; right: 28px;
+      width: 46px; height: 46px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid var(--card-border);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0; visibility: hidden;
+      transition: all 0.3s;
+      z-index: 99;
+      font-size: 18px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 16px rgba(14, 165, 233, 0.12);
+      font-weight: 700;
+    }
+    .back-to-top.visible { opacity: 1; visibility: visible; }
+    .back-to-top:hover { border-color: var(--primary-light); background: #fff; transform: translateY(-3px); box-shadow: 0 8px 24px rgba(14, 165, 233, 0.2); }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 680px) {
+      .nav-links { display: none; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .card { padding: 28px 22px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="glow-orb glow-orb-1"></div>
+  <div class="glow-orb glow-orb-2"></div>
+
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">黑泥</a>
+      <div class="nav-links">
+        <a href="index.html">首頁</a>
+        <a href="about.html">關於</a>
+        <a href="projects.html">作品</a>
+        <a href="contact.html" class="active">聯絡</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="card page-header reveal">
+      <h1>與我<span class="gradient-text">聯繫</span></h1>
+      <p class="muted">有專案合作、技術交流，或只是想聊聊？歡迎隨時聯絡我。</p>
+    </div>
+
+    <div class="contact-grid">
+      <!-- 左側：聯絡方式 -->
+      <div class="card reveal">
+        <h2><span class="icon">📬</span> 聯絡方式</h2>
+        <div class="availability">
+          <span class="dot"></span>
+          <span>目前開放接案合作</span>
+        </div>
+        <div class="contact-methods">
+          <a class="contact-method" href="mailto:you@example.com">
+            <div class="icon-box">📧</div>
+            <div class="info">
+              <h4>Email</h4>
+              <p>you@example.com</p>
+            </div>
+          </a>
+          <a class="contact-method" href="https://github.com/yourname" target="_blank">
+            <div class="icon-box">🐙</div>
+            <div class="info">
+              <h4>GitHub</h4>
+              <p>github.com/yourname</p>
+            </div>
+          </a>
+          <a class="contact-method" href="#" target="_blank">
+            <div class="icon-box">💼</div>
+            <div class="info">
+              <h4>LinkedIn</h4>
+              <p>linkedin.com/in/yourname</p>
+            </div>
+          </a>
+          <a class="contact-method" href="#" target="_blank">
+            <div class="icon-box">🐦</div>
+            <div class="info">
+              <h4>Twitter / X</h4>
+              <p>@yourname</p>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- 右側：表單 -->
+      <div class="card reveal">
+        <h2><span class="icon">✉️</span> 發送訊息</h2>
+        <p class="muted" style="margin-bottom: 20px;">填寫下方表單，我會盡快回覆你。</p>
+        <form onsubmit="handleSubmit(event)">
+          <div class="form-group">
+            <label for="name">你的名字</label>
+            <input type="text" id="name" name="name" placeholder="請輸入你的名字" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="you@example.com" required>
+          </div>
+          <div class="form-group">
+            <label for="subject">主旨</label>
+            <input type="text" id="subject" name="subject" placeholder="專案合作 / 技術交流 / 其他">
+          </div>
+          <div class="form-group">
+            <label for="message">訊息內容</label>
+            <textarea id="message" name="message" placeholder="想說什麼都可以..." required></textarea>
+          </div>
+          <button type="submit" class="btn-submit">發送訊息 →</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- FAQ 小區塊 -->
+    <div class="card reveal">
+      <h2><span class="icon">💬</span> 常見問題</h2>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <div>
+          <h4 style="font-size: 15px; margin: 0 0 6px; color: var(--text);">🔹 你目前接受什麼類型的專案？</h4>
+          <p class="muted" style="font-size: 14px;">網頁開發、AI 應用整合、UI/UX 設計、自動化工作流建置等。歡迎帶著想法來聊聊！</p>
+        </div>
+        <div>
+          <h4 style="font-size: 15px; margin: 0 0 6px; color: var(--text);">🔹 回覆需要多久時間？</h4>
+          <p class="muted" style="font-size: 14px;">通常會在 1–2 個工作日內回覆。如果比較急，可以直接發 Email 標註「急件」。</p>
+        </div>
+        <div>
+          <h4 style="font-size: 15px; margin: 0 0 6px; color: var(--text);">🔹 可以遠端合作嗎？</h4>
+          <p class="muted" style="font-size: 14px;">當然可以！我習慣使用 GitHub、Figma、Notion 等工具進行遠端協作。</p>
+        </div>
+        <div>
+          <h4 style="font-size: 15px; margin: 0 0 6px; color: var(--text);">🔹 有沒有作品集可以參考？</h4>
+          <p class="muted" style="font-size: 14px;">請前往 <a href="projects.html" style="color: var(--primary); text-decoration: none; font-weight: 600;">作品頁面</a> 查看完整專案介紹與 Demo 連結。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© <span id="year"></span> 黑泥 · Made with <span class="heart">♥</span> & AI</p>
+  </footer>
+
+  <div class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+
+  <script>
+    function handleSubmit(e) {
+      e.preventDefault();
+      alert('表單已送出！（這是靜態網站示範，實際上線時請串接表單服務如 Formspree 或後端 API）');
+    }
+
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 20);
+      document.getElementById('backToTop').classList.toggle('visible', window.scrollY > 400);
+    });
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

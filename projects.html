@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>作品 | 黑泥 Portfolio</title>
+  <meta name="description" content="黑泥的完整作品集，包含網頁開發、AI 應用與介面設計專案。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f0f7ff;
+      --card: rgba(255, 255, 255, 0.78);
+      --card-border: rgba(14, 165, 233, 0.18);
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --primary: #0ea5e9;
+      --primary-light: #38bdf8;
+      --accent: #06b6d4;
+      --accent-2: #6366f1;
+      --gradient: linear-gradient(135deg, #0ea5e9, #06b6d4);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+    body {
+      font-family: 'Inter', 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+      position: relative;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: 
+        linear-gradient(rgba(14, 165, 233, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(14, 165, 233, 0.05) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+      mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+      -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+    }
+    .glow-orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.45;
+    }
+    .glow-orb-1 { width: 600px; height: 600px; background: rgba(14, 165, 233, 0.18); top: -15%; right: -10%; }
+    .glow-orb-2 { width: 500px; height: 500px; background: rgba(99, 102, 241, 0.12); bottom: 5%; left: -10%; }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(20px) saturate(1.4);
+      -webkit-backdrop-filter: blur(20px) saturate(1.4);
+      border-bottom: 1px solid var(--card-border);
+      transition: all 0.3s ease;
+    }
+    nav.scrolled { box-shadow: 0 4px 30px rgba(14, 165, 233, 0.1); background: rgba(255, 255, 255, 0.88); }
+    .nav-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+    }
+    .nav-logo {
+      font-weight: 700;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .nav-logo::before { content: '◆'; color: var(--primary); font-size: 14px; }
+    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 2.5px;
+      background: var(--gradient);
+      border-radius: 2px;
+      transition: width 0.3s ease;
+    }
+    .nav-links a:hover { color: var(--primary); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a.active { color: var(--primary); }
+    .nav-links a.active::after { width: 100%; }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 100px 24px 60px;
+      position: relative;
+      z-index: 1;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 36px;
+      margin-bottom: 28px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 4px 24px rgba(14, 165, 233, 0.06), inset 0 1px 0 rgba(255,255,255,0.9);
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--primary-light), var(--accent), transparent);
+      opacity: 0.5;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(14, 165, 233, 0.3);
+      box-shadow: 0 20px 60px rgba(14, 165, 233, 0.1), 0 0 40px rgba(14, 165, 233, 0.06), inset 0 1px 0 rgba(255,255,255,0.95);
+    }
+
+    h1 { font-size: 32px; font-weight: 700; margin: 0 0 12px; }
+    h2 { font-size: 22px; font-weight: 700; margin: 0 0 18px; display: flex; align-items: center; gap: 10px; }
+    h2 .icon { font-size: 22px; }
+    .muted { color: var(--text-muted); line-height: 1.85; margin: 0; font-size: 15px; }
+
+    .page-header {
+      text-align: center;
+      padding: 20px 0 10px;
+    }
+    .page-header h1 .gradient-text {
+      background: linear-gradient(135deg, #0ea5e9, #06b6d4, #6366f1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* 篩選標籤 */
+    .filter-tabs {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .filter-tab {
+      padding: 8px 18px;
+      border-radius: 999px;
+      border: 1px solid var(--card-border);
+      background: rgba(255,255,255,0.5);
+      color: var(--text-muted);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      font-family: inherit;
+    }
+    .filter-tab:hover {
+      border-color: var(--primary-light);
+      color: var(--primary);
+      background: rgba(14, 165, 233, 0.06);
+    }
+    .filter-tab.active {
+      background: var(--gradient);
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 4px 16px rgba(14, 165, 233, 0.3);
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .project-card {
+      background: rgba(255, 255, 255, 0.55);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      position: relative;
+    }
+    .project-card.hidden { display: none; }
+    .project-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 20px;
+      border: 1.5px solid transparent;
+      transition: border-color 0.3s;
+      pointer-events: none;
+    }
+    .project-card:hover {
+      transform: translateY(-7px);
+      box-shadow: 0 24px 50px rgba(14, 165, 233, 0.1), 0 0 30px rgba(14, 165, 233, 0.06);
+    }
+    .project-card:hover::after {
+      border-color: rgba(14, 165, 233, 0.25);
+    }
+    .project-img {
+      width: 100%; height: 180px;
+      background: linear-gradient(135deg, rgba(14,165,233,0.1), rgba(99,102,241,0.06));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 52px;
+      position: relative;
+      overflow: hidden;
+    }
+    .project-img .link-icon {
+      position: absolute;
+      top: 14px; right: 14px;
+      width: 32px; height: 32px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      opacity: 0;
+      transform: translateY(-4px);
+      transition: all 0.3s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      color: var(--primary);
+      border: 1px solid var(--card-border);
+    }
+    .project-card:hover .link-icon {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .project-body {
+      padding: 24px;
+    }
+    .project-body h3 {
+      margin: 0 0 8px;
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .project-body p {
+      margin: 0;
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+    .project-tags {
+      display: flex;
+      gap: 6px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+    .project-tags span {
+      font-size: 12px;
+      padding: 4px 12px;
+      border-radius: 8px;
+      background: rgba(14, 165, 233, 0.07);
+      color: var(--primary);
+      font-weight: 500;
+      border: 1px solid rgba(14, 165, 233, 0.12);
+    }
+    .project-tags span.ai {
+      background: rgba(99, 102, 241, 0.07);
+      color: var(--accent-2);
+      border-color: rgba(99, 102, 241, 0.12);
+    }
+
+    /* Featured 大卡片 */
+    .featured-card {
+      grid-column: 1 / -1;
+      display: flex;
+      gap: 0;
+      overflow: hidden;
+    }
+    .featured-card .project-img {
+      width: 45%;
+      height: auto;
+      min-height: 260px;
+      flex-shrink: 0;
+    }
+    .featured-card .project-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 36px;
+    }
+    .featured-card .project-body h3 {
+      font-size: 22px;
+    }
+    .featured-card .project-body p {
+      font-size: 15px;
+    }
+    .featured-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 8px;
+      background: var(--gradient);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      width: fit-content;
+    }
+
+    footer {
+      text-align: center;
+      padding: 48px 24px;
+      color: var(--text-muted);
+      font-size: 13.5px;
+      position: relative;
+      z-index: 1;
+    }
+    footer .heart { color: #f472b6; display: inline-block; animation: heartbeat 2s infinite; }
+    @keyframes heartbeat { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.15); } 30% { transform: scale(1); } }
+
+    .back-to-top {
+      position: fixed;
+      bottom: 28px; right: 28px;
+      width: 46px; height: 46px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid var(--card-border);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0; visibility: hidden;
+      transition: all 0.3s;
+      z-index: 99;
+      font-size: 18px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 16px rgba(14, 165, 233, 0.12);
+      font-weight: 700;
+    }
+    .back-to-top.visible { opacity: 1; visibility: visible; }
+    .back-to-top:hover { border-color: var(--primary-light); background: #fff; transform: translateY(-3px); box-shadow: 0 8px 24px rgba(14, 165, 233, 0.2); }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 680px) {
+      .nav-links { display: none; }
+      .project-grid { grid-template-columns: 1fr; }
+      .featured-card { flex-direction: column; }
+      .featured-card .project-img { width: 100%; height: 180px; }
+      .card { padding: 28px 22px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="glow-orb glow-orb-1"></div>
+  <div class="glow-orb glow-orb-2"></div>
+
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">黑泥</a>
+      <div class="nav-links">
+        <a href="index.html">首頁</a>
+        <a href="about.html">關於</a>
+        <a href="projects.html" class="active">作品</a>
+        <a href="contact.html">聯絡</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="card page-header reveal">
+      <h1>我的<span class="gradient-text">作品</span></h1>
+      <p class="muted">這裡展示了我近期完成的專案，涵蓋網頁開發、AI 應用與介面設計。</p>
+    </div>
+
+    <div class="card reveal">
+      <div class="filter-tabs">
+        <button class="filter-tab active" data-filter="all">全部</button>
+        <button class="filter-tab" data-filter="web">網頁開發</button>
+        <button class="filter-tab" data-filter="ai">AI 應用</button>
+        <button class="filter-tab" data-filter="design">設計</button>
+      </div>
+
+      <div class="project-grid" id="projectGrid">
+        <!-- Featured -->
+        <a class="project-card featured-card" href="https://github.com/yourname/featured" target="_blank" data-category="web ai">
+          <div class="project-img">
+            🚀
+            <div class="link-icon">↗</div>
+          </div>
+          <div class="project-body">
+            <div class="featured-badge">⭐ 精選專案</div>
+            <h3>AI 驅動的個人知識庫</h3>
+            <p>一個結合 LLM 與向量資料庫的個人知識管理系統。使用者可以上傳文件、筆記，並透過自然語言查詢快速找到所需資訊。支援多種文件格式與即時同步。</p>
+            <div class="project-tags">
+              <span>Next.js</span>
+              <span>TypeScript</span>
+              <span class="ai">OpenAI API</span>
+              <span class="ai">向量資料庫</span>
+            </div>
+          </div>
+        </a>
+
+        <a class="project-card" href="https://github.com/yourname/project1" target="_blank" data-category="web">
+          <div class="project-img">
+            🌐
+            <div class="link-icon">↗</div>
+          </div>
+          <div class="project-body">
+            <h3>個人 AI 作品集網站</h3>
+            <p>使用純 HTML、CSS、JavaScript 打造的響應式個人網站，整合 AI 輔助設計流程與多語言支援。</p>
+            <div class="project-tags">
+              <span>HTML</span><span>CSS</span><span>JS</span><span>RWD</span>
+            </div>
+          </div>
+        </a>
+
+        <a class="project-card" href="https://github.com/yourname/project2" target="_blank" data-category="design ai">
+          <div class="project-img">
+            🎨
+            <div class="link-icon">↗</div>
+          </div>
+          <div class="project-body">
+            <h3>AI 介面設計系統</h3>
+            <p>設計一套完整的淺藍科技感 UI 系統，運用 AI 輔助生成視覺素材、配色方案與元件規範。</p>
+            <div class="project-tags">
+              <span>Figma</span><span>UI/UX</span><span class="ai">AI 輔助</span>
+            </div>
+          </div>
+        </a>
+
+        <a class="project-card" href="https://github.com/yourname/project3" target="_blank" data-category="ai">
+          <div class="project-img">
+            🤖
+            <div class="link-icon">↗</div>
+          </div>
+          <div class="project-body">
+            <h3>AI 對話助手</h3>
+            <p>基於 LLM API 打造的網頁對話應用，支援多輪對話、上下文記憶與自訂角色設定。</p>
+            <div class="project-tags">
+              <span>JavaScript</span><span class="ai">OpenAI API</span><span class="ai">LLM</span>
+            </div>
+          </div>
+        </a>
+
+        <a class="project-card" href="https://github.com/yourname/project4" target="_blank" data-category="ai">
+          <div class="project-img">
+            ⚡
+            <div class="link-icon">↗</div>
+          </div>
+          <div class="project-body">
+            <h3>自動化內容生成器</h3>
+            <p>結合 Prompt 模板與 API，自動生成社群貼文、視覺素材與排程發布的工作流工具。</p>
+            <div class="project-tags">
+              <span>Node.js</span><span class="ai">n8n</span><span class="ai">自動化</span>
+            </div>
+          </div>
+        </a>
+
+        <a class="project-card" href="https://github.com/yourname/project5" target="_blank" data-category="web">
+          <div class="project-img">
+            📊
+            <div class="link-icon">↗</div>
+          </div>
+          <div class="project-body">
+            <h3>個人數據看板</h3>
+            <p>追蹤閱讀、運動、習慣等生活數據的視覺化看板，支援熱力圖與年度回顧功能。</p>
+            <div class="project-tags">
+              <span>React</span><span>D3.js</span><span>Notion API</span>
+            </div>
+          </div>
+        </a>
+
+        <a class="project-card" href="https://github.com/yourname/project6" target="_blank" data-category="design">
+          <div class="project-img">
+            🖼️
+            <div class="link-icon">↗</div>
+          </div>
+          <div class="project-body">
+            <h3>品牌視覺識別設計</h3>
+            <p>為新創科技品牌設計完整的視覺識別系統，包含 Logo、色彩規範、應用範例。</p>
+            <div class="project-tags">
+              <span>Figma</span><span>品牌設計</span><span>Illustrator</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© <span id="year"></span> 黑泥 · Made with <span class="heart">♥</span> & AI</p>
+  </footer>
+
+  <div class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+
+  <script>
+    // 篩選功能
+    const filterTabs = document.querySelectorAll('.filter-tab');
+    const projectCards = document.querySelectorAll('.project-card');
+
+    filterTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        filterTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const filter = tab.dataset.filter;
+
+        projectCards.forEach(card => {
+          if (filter === 'all') {
+            card.classList.remove('hidden');
+          } else {
+            const categories = card.dataset.category || '';
+            if (categories.includes(filter)) {
+              card.classList.remove('hidden');
+            } else {
+              card.classList.add('hidden');
+            }
+          }
+        });
+      });
+    });
+
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 20);
+      document.getElementById('backToTop').classList.toggle('visible', window.scrollY > 400);
+    });
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

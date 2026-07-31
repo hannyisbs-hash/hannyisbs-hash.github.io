@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>關於我 | 黑泥 Portfolio</title>
+  <meta name="description" content="了解黑泥的背景、經歷與設計理念。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f0f7ff;
+      --card: rgba(255, 255, 255, 0.78);
+      --card-border: rgba(14, 165, 233, 0.18);
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --primary: #0ea5e9;
+      --primary-light: #38bdf8;
+      --accent: #06b6d4;
+      --accent-2: #6366f1;
+      --gradient: linear-gradient(135deg, #0ea5e9, #06b6d4);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+    body {
+      font-family: 'Inter', 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+      position: relative;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: 
+        linear-gradient(rgba(14, 165, 233, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(14, 165, 233, 0.05) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+      mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+      -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+    }
+    .glow-orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.45;
+    }
+    .glow-orb-1 { width: 600px; height: 600px; background: rgba(14, 165, 233, 0.18); top: -15%; right: -10%; }
+    .glow-orb-2 { width: 500px; height: 500px; background: rgba(99, 102, 241, 0.12); bottom: 5%; left: -10%; }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(20px) saturate(1.4);
+      -webkit-backdrop-filter: blur(20px) saturate(1.4);
+      border-bottom: 1px solid var(--card-border);
+      transition: all 0.3s ease;
+    }
+    nav.scrolled { box-shadow: 0 4px 30px rgba(14, 165, 233, 0.1); background: rgba(255, 255, 255, 0.88); }
+    .nav-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+    }
+    .nav-logo {
+      font-weight: 700;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .nav-logo::before { content: '◆'; color: var(--primary); font-size: 14px; }
+    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 2.5px;
+      background: var(--gradient);
+      border-radius: 2px;
+      transition: width 0.3s ease;
+    }
+    .nav-links a:hover { color: var(--primary); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a.active { color: var(--primary); }
+    .nav-links a.active::after { width: 100%; }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 100px 24px 60px;
+      position: relative;
+      z-index: 1;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 36px;
+      margin-bottom: 28px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 4px 24px rgba(14, 165, 233, 0.06), inset 0 1px 0 rgba(255,255,255,0.9);
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--primary-light), var(--accent), transparent);
+      opacity: 0.5;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(14, 165, 233, 0.3);
+      box-shadow: 0 20px 60px rgba(14, 165, 233, 0.1), 0 0 40px rgba(14, 165, 233, 0.06), inset 0 1px 0 rgba(255,255,255,0.95);
+    }
+
+    h1 { font-size: 32px; font-weight: 700; margin: 0 0 12px; }
+    h2 { font-size: 22px; font-weight: 700; margin: 0 0 18px; display: flex; align-items: center; gap: 10px; }
+    h2 .icon { font-size: 22px; }
+    .muted { color: var(--text-muted); line-height: 1.85; margin: 0; font-size: 15px; }
+
+    .about-hero {
+      display: flex;
+      gap: 40px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .about-hero .avatar {
+      width: 160px; height: 160px;
+      border-radius: 50%;
+      background: var(--gradient);
+      padding: 4px;
+      flex-shrink: 0;
+      box-shadow: 0 8px 32px rgba(14, 165, 233, 0.25);
+    }
+    .about-hero .avatar-inner {
+      width: 100%; height: 100%;
+      border-radius: 50%;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 64px;
+      overflow: hidden;
+    }
+    .about-hero .avatar-inner img {
+      width: 100%; height: 100%;
+      object-fit: cover; border-radius: 50%;
+    }
+    .about-hero-text { flex: 1; min-width: 280px; }
+    .about-hero-text h1 .gradient-text {
+      background: linear-gradient(135deg, #0ea5e9, #06b6d4, #6366f1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .about-hero-text .subtitle {
+      color: var(--text-muted);
+      font-size: 16px;
+      margin-bottom: 16px;
+    }
+    .about-hero-text .stats {
+      display: flex;
+      gap: 32px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+    .stat-item { text-align: center; }
+    .stat-item .num {
+      font-size: 28px;
+      font-weight: 700;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat-item .label {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 28px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 8px;
+      bottom: 8px;
+      width: 2px;
+      background: linear-gradient(180deg, var(--primary), var(--accent-2));
+      border-radius: 2px;
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 28px;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -26px;
+      top: 6px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #fff;
+      border: 2.5px solid var(--primary);
+      box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.1);
+    }
+    .timeline-item h4 {
+      font-size: 16px;
+      font-weight: 700;
+      margin: 0 0 4px;
+      color: var(--text);
+    }
+    .timeline-item .time {
+      font-size: 13px;
+      color: var(--primary);
+      font-weight: 600;
+      margin-bottom: 6px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .timeline-item p {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    .philosophy-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .philosophy-item {
+      background: rgba(255,255,255,0.5);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 24px;
+      transition: all 0.3s ease;
+    }
+    .philosophy-item:hover {
+      transform: translateY(-3px);
+      border-color: rgba(14, 165, 233, 0.3);
+      box-shadow: 0 8px 24px rgba(14, 165, 233, 0.08);
+    }
+    .philosophy-item .icon-box {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(14,165,233,0.1), rgba(99,102,241,0.08));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      margin-bottom: 12px;
+    }
+    .philosophy-item h4 {
+      font-size: 15px;
+      font-weight: 700;
+      margin: 0 0 6px;
+      color: var(--text);
+    }
+    .philosophy-item p {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      margin: 0;
+      line-height: 1.65;
+    }
+
+    .now-doing {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .now-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 18px;
+      border-radius: 12px;
+      background: rgba(14, 165, 233, 0.06);
+      border: 1px solid rgba(14, 165, 233, 0.12);
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+    .now-item .status-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #22c55e;
+      animation: pulse-dot 2s infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    footer {
+      text-align: center;
+      padding: 48px 24px;
+      color: var(--text-muted);
+      font-size: 13.5px;
+      position: relative;
+      z-index: 1;
+    }
+    footer .heart { color: #f472b6; display: inline-block; animation: heartbeat 2s infinite; }
+    @keyframes heartbeat { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.15); } 30% { transform: scale(1); } }
+
+    .back-to-top {
+      position: fixed;
+      bottom: 28px; right: 28px;
+      width: 46px; height: 46px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid var(--card-border);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0; visibility: hidden;
+      transition: all 0.3s;
+      z-index: 99;
+      font-size: 18px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 16px rgba(14, 165, 233, 0.12);
+      font-weight: 700;
+    }
+    .back-to-top.visible { opacity: 1; visibility: visible; }
+    .back-to-top:hover { border-color: var(--primary-light); background: #fff; transform: translateY(-3px); box-shadow: 0 8px 24px rgba(14, 165, 233, 0.2); }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 680px) {
+      .nav-links { display: none; }
+      .about-hero { flex-direction: column; text-align: center; }
+      .about-hero .avatar { margin: 0 auto; }
+      .philosophy-grid { grid-template-columns: 1fr; }
+      .card { padding: 28px 22px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="glow-orb glow-orb-1"></div>
+  <div class="glow-orb glow-orb-2"></div>
+
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">黑泥</a>
+      <div class="nav-links">
+        <a href="index.html">首頁</a>
+        <a href="about.html" class="active">關於</a>
+        <a href="projects.html">作品</a>
+        <a href="contact.html">聯絡</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <!-- 關於 Hero -->
+    <div class="card reveal">
+      <div class="about-hero">
+        <div class="avatar">
+          <div class="avatar-inner">
+            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Hanny&backgroundColor=b6e3f4" alt="avatar" onerror="this.style.display='none'; this.parentElement.innerText='👤';">
+          </div>
+        </div>
+        <div class="about-hero-text">
+          <h1>我是 <span class="gradient-text">黑泥</span></h1>
+          <p class="subtitle">熱愛科技與設計的創作者 · AI 應用探索者</p>
+          <p class="muted">
+            我相信科技與設計的結合能創造出既實用又有溫度的作品。從網頁開發到 AI 工具應用，我持續探索人機協作的可能性，並將所學轉化為能解決實際問題的產品。
+          </p>
+          <div class="stats">
+            <div class="stat-item">
+              <div class="num">3+</div>
+              <div class="label">年開發經驗</div>
+            </div>
+            <div class="stat-item">
+              <div class="num">10+</div>
+              <div class="label">完成專案</div>
+            </div>
+            <div class="stat-item">
+              <div class="num">∞</div>
+              <div class="label">學習熱情</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 經歷時間軸 -->
+    <div class="card reveal">
+      <h2><span class="icon">📍</span> 經歷</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="time">2024 — 現在</div>
+          <h4>自由創作者 / 接案開發</h4>
+          <p>專注於 AI 應用開發與網頁設計，協助客戶將創意轉化為數位產品。同時持續學習 LLM、自動化工具等前沿技術。</p>
+        </div>
+        <div class="timeline-item">
+          <div class="time">2023 — 2024</div>
+          <h4>前端開發實習 / 自學精進</h4>
+          <p>深入學習現代前端技術棧，從基礎 HTML/CSS 進階到 React、Next.js。開始接觸 AI 工具，將其融入開發與設計流程。</p>
+        </div>
+        <div class="timeline-item">
+          <div class="time">2022 — 2023</div>
+          <h4>踏入網頁開發</h4>
+          <p>開始學習程式設計，從第一個靜態網頁到互動式應用。同時培養對 UI/UX 設計的興趣，學習 Figma 與設計系統。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 設計理念 -->
+    <div class="card reveal">
+      <h2><span class="icon">💡</span> 設計理念</h2>
+      <div class="philosophy-grid">
+        <div class="philosophy-item">
+          <div class="icon-box">🎯</div>
+          <h4>以使用者為中心</h4>
+          <p>每個設計決策都應該服務於使用者需求，而非單純追求視覺效果。</p>
+        </div>
+        <div class="philosophy-item">
+          <div class="icon-box">⚡</div>
+          <h4>簡潔即力量</h4>
+          <p>去除多餘的裝飾，讓核心功能與內容自己說話。少即是多。</p>
+        </div>
+        <div class="philosophy-item">
+          <div class="icon-box">🤖</div>
+          <h4>AI 賦能創作</h4>
+          <p>善用 AI 工具提升效率，但始終保持人類的創意判斷與審美品味。</p>
+        </div>
+        <div class="philosophy-item">
+          <div class="icon-box">🔄</div>
+          <h4>持續迭代</h4>
+          <p>沒有完美的作品，只有不斷改進的過程。快速上線，持續優化。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 現在在做什麼 -->
+    <div class="card reveal">
+      <h2><span class="icon">🌱</span> 現在在做什麼</h2>
+      <p class="muted" style="margin-bottom: 16px;">這些是我目前正在投入的事情：</p>
+      <div class="now-doing">
+        <div class="now-item"><span class="status-dot"></span> 學習 Next.js 與 AI 應用開發</div>
+        <div class="now-item"><span class="status-dot"></span> 經營個人作品集與技術部落格</div>
+        <div class="now-item"><span class="status-dot"></span> 探索多模態 AI 與自動化工作流</div>
+        <div class="now-item"><span class="status-dot"></span> 閱讀《設計心理學》</div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© <span id="year"></span> 黑泥 · Made with <span class="heart">♥</span> & AI</p>
+  </footer>
+
+  <div class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+
+  <script>
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 20);
+      document.getElementById('backToTop').classList.toggle('visible', window.scrollY > 400);
+    });
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
